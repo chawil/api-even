@@ -1,6 +1,6 @@
 from flask import Flask
 
-import functions
+from core import is_even
 
 app = Flask(__name__)
 
@@ -15,9 +15,10 @@ def call_even(number: int):
         result["error"] = "A number is expected"
         return result, 500
 
-    is_even = functions.is_even(number)
+    is_even = is_even(number)
     result["isEven"] = is_even
     return result
 
 
-app.run(host="0.0.0.0")
+if __name__ == '__main__':
+    app.run(host="0.0.0.0")
