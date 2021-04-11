@@ -15,8 +15,8 @@ def call_even(number: int):
         result["error"] = "A number is expected"
         return result, 500
 
-    is_even = is_even(number)
-    result["isEven"] = is_even
+    even = is_even(number)
+    result["isEven"] = even
     return result
 
 
