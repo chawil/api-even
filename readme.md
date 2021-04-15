@@ -2,6 +2,13 @@
 
 API to know if a number is odd or even
 
+## Docker
+
+```bash
+# to run container
+docker run -p 5000:5000 --rm -d api-even/latest
+```
+
 ## dev
 
 ```bash
@@ -19,6 +26,7 @@ python main.py
 
 # to test
 python tests.py
+
 ```
 
 ## To do
