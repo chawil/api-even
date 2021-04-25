@@ -10,9 +10,6 @@ jobs:
     environment:
       name: dev
     steps:
-      - name: test env secrets access
-        run: |
-          echo ${{ secrets.SERVER_URL }}
       - uses: actions/checkout@v2
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
