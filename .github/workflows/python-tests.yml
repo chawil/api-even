@@ -36,9 +36,3 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           image-name: api-even
           image-tag: latest
-
-  test-action-dependency:
-    needs: echo-lol
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "ok, very lol"
