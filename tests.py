@@ -1,8 +1,7 @@
 import unittest
 from random import randint
 
-from core import is_even
-from core import is_odd
+from core import is_even, is_odd
 
 
 class TestEvenCore(unittest.TestCase):
@@ -11,13 +10,13 @@ class TestEvenCore(unittest.TestCase):
         self.assertFalse(is_even(1))
 
     def test_is_2_even(self):
-        self.assertTrue(is_even(2))        
+        self.assertTrue(is_even(2))
 
     def test_is_1_odd(self):
         self.assertTrue(is_odd(1))
 
     def test_is_2_odd(self):
-        self.assertFalse(is_odd(2))        
+        self.assertFalse(is_odd(2))
 
     def test_random_small_number(self):
         for _ in range(9):
@@ -25,8 +24,7 @@ class TestEvenCore(unittest.TestCase):
             even = random_int % 2 == 0
             self.assertEqual(is_even(random_int), even)
             odd = random_int % 2 == 1
-            self.assertEqual(is_odd(random_int),odd)
-
+            self.assertEqual(is_odd(random_int), odd)
 
 
 if __name__ == '__main__':
