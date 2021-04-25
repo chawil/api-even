@@ -1,0 +1,16 @@
+name: Python second thing test order
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  echo-lol:
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+    steps:
+      - name: test env secrets access
+        run: |
+          echo ${{ secrets.SERVER_URL }}
+          echo "lol bien joué"
