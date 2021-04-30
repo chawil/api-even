@@ -1,0 +1,15 @@
+name: Python package
+
+on: 
+  pull_request:
+    branches: [master]
+
+jobs:
+  print-env:
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+    steps:
+#      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: echo ${{ env.env }}
