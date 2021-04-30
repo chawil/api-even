@@ -1,4 +1,4 @@
-name: Test code
+name: Test Code & Dockerize App
 
 on: 
   pull_request:
@@ -20,3 +20,15 @@ jobs:
           pip install -r requirements.txt
       - name: Test with pytest
         run: python tests.py
+
+  build-docker:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build and Publish latest Docker image
+        uses: VaultVulp/gp-docker-action@1.1.8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          image-name: api-even
+          image-tag: latest
