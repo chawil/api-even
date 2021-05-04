@@ -28,8 +28,3 @@ python main.py
 python tests.py
 
 ```
-
-## To do
-
-- [x] everything
-
