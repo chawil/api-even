@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/chawil/api-even/branch/master/graph/badge.svg?token=CSHFDGGO8A)](https://codecov.io/gh/chawil/api-even)
+
 # api-even
 
 API to know if a number is odd or even
