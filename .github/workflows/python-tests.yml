@@ -1,6 +1,6 @@
 name: Test Code & Dockerize App
 
-on: 
+on:
   pull_request:
     branches: [develop, master]
 jobs:
@@ -23,17 +23,6 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
-         fail_ci_if_error: true        
+         fail_ci_if_error: true
          token: ${{ secrets.CODECOV_TOKEN }}
          flags: unittests
-  build-docker:
-    needs: tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build and Publish latest Docker image
-        uses: VaultVulp/gp-docker-action@1.1.8
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          image-name: api-even
-          image-tag: latest

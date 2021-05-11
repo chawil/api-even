@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "wlppocaks-2d5e"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "wlppocaks-2d5e"
+  template:
+    metadata:
+      labels:
+        app: "wlppocaks-2d5e"
+    spec:
+      containers:
+        - name: "wlppocaks-2d5e"
+          image: "wlppoccicd.azurecr.io/wlppocaks"
+          ports:
+          - containerPort: 5000
