@@ -9,7 +9,7 @@ env:
   CLUSTER_NAME: wlp-poc-aks
   CLUSTER_RESOURCE_GROUP: RG-WLEPOMMELET
   NAMESPACE: namespace-api-even
-  SECRET: "{secret-name}"
+  SECRET: "secret"
   APP_NAME: api-even
 
 jobs:
