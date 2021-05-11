@@ -1,4 +1,4 @@
-name: Test Code & Dockerize App
+name: Testing
 
 on:
   pull_request:
