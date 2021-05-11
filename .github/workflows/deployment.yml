@@ -12,7 +12,8 @@ env:
   APP_NAME: api-even
 
 jobs:
-  build-docker:
+  deploy:
+    needs: tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
