@@ -4,6 +4,12 @@ on:
   push:
     branches: [master]
 
+env:
+  REGISTRY_NAME: wlppoccicd
+  NAMESPACE: wlp-poc-aks9254
+  SECRET: wlppocaksdockerauth
+  APP_NAME: api-even
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -12,15 +18,15 @@ jobs:
 
     - uses: azure/docker-login@v1
       with:
-        login-server: wlppoccicd.azurecr.io
+        login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
     - name: Build and push image to ACR
       id: build-image
       run: |
-        docker build "$GITHUB_WORKSPACE/" -f  "Dockerfile" -t wlppoccicd.azurecr.io/wlppocaks:${{ github.sha }} --label dockerfile-path=Dockerfile
-        docker push wlppoccicd.azurecr.io/wlppocaks:${{ github.sha }}
+        docker build "$GITHUB_WORKSPACE/" -f  "Dockerfile" -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }} --label dockerfile-path=Dockerfile
+        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
 
     - uses: azure/k8s-set-context@v1
       with:
@@ -29,26 +35,26 @@ jobs:
 
     - name: Create namespace
       run: |
-        namespacePresent=`kubectl get namespace | grep wlp-poc-aks9254 | wc -l`
+        namespacePresent=`kubectl get namespace | grep ${{ env.NAMESPACE }} | wc -l`
         if [ $namespacePresent -eq 0 ]
         then
-            echo `kubectl create namespace wlp-poc-aks9254`
+            echo `kubectl create namespace ${{ env.NAMESPACE }}`
         fi
     - uses: azure/k8s-create-secret@v1
       with:
-        namespace: wlp-poc-aks9254
-        container-registry-url: wlppoccicd.azurecr.io
+        namespace: ${{ env.NAMESPACE }}
+        container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        secret-name: wlppocaksdockerauth
+        secret-name: ${{ env.SECRET }}
 
     - uses: azure/k8s-deploy@v1.2
       with:
-        namespace: wlp-poc-aks9254
+        namespace: ${{ env.NAMESPACE }}
         manifests: |
           manifests/deployment.yml
           manifests/service.yml
         images: |
-          wlppoccicd.azurecr.io/wlppocaks:${{ github.sha }}
+          ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
         imagepullsecrets: |
-          wlppocaksdockerauth
+          ${{ env.SECRET }}
