@@ -9,6 +9,7 @@ env:
   CLUSTER_NAME: wlp-poc-aks
   CLUSTER_RESOURCE_GROUP: RG-WLEPOMMELET
   NAMESPACE: namespace-api-even
+  SECRET: "{secret-name}"
   APP_NAME: api-even
 
 jobs:
@@ -31,6 +32,14 @@ jobs:
           resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
       - run: |
           kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
+      - uses: azure/k8s-create-secret@v1
+        with:
+          container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+          container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+          container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+          secret-name: ${{ env.SECRET }}
+          namespace: ${{ env.NAMESPACE }}
+          arguments: --force true
       - uses: azure/k8s-deploy@v1
         with:
           manifests: |
@@ -38,4 +47,6 @@ jobs:
             manifests/service.yml
           images: |
             ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+          imagepullsecrets: |
+            ${{ env.SECRET }}
           namespace: ${{ env.NAMESPACE }}
