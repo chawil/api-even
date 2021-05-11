@@ -30,3 +30,12 @@ python main.py
 python tests.py
 
 ```
+
+## Setup deployment.yml
+
+```bash
+3 secrets :
+- container registry name : Settings > Access Keys 
+- container registry password : Settings > Access Keys 
+- kubeconfig cluster aks : az aks get-credentials --resource-group <RESOURCE GROUP NAME> --name <CLUSTER NAME> --file <OUTPUT FILE>
+```
