@@ -30,3 +30,7 @@ python main.py
 python tests.py
 
 ```
+
+## performances notes
+
+- When testing in local, calling http://localhost:5000/ is 300x slower than http://127.0.0.1:5000/ for some DNS resolution problem, not sure why it happens only with flask (no problem with the go front)
